@@ -440,6 +440,17 @@
     font-size: 0.95rem;
   }
 
+  .exhuming {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--moon-dim);
+    opacity: 0.6;
+    padding: 4rem 0;
+  }
+
   @media (max-width: 600px) {
     .cemetery { gap: 2rem 1rem; }
     .hero { padding: 4rem 1rem 2rem; }
@@ -492,47 +503,9 @@
 <div class="ground"></div>
 
 <script>
-const graves = [
-  // Gaming
-  { name: "E3", category: "Gaming", born: 1995, died: 2023, cause: "Publisher exodus + online showcases", epitaph: "Once gaming's Super Bowl. Sony left first. Nintendo followed. COVID delivered the killing blow." },
-  { name: "Casual Connect", category: "Gaming", born: 2005, died: 2019, cause: "Mobile market consolidation", epitaph: "The go-to conference for the casual gaming boom. When mobile stopped being novel, so did it." },
-  { name: "Spike VGAs", category: "Gaming", born: 2003, died: 2013, cause: "Reborn as The Game Awards", epitaph: "Cringe-filled but beloved. Reincarnated by Geoff Keighley into something classier." },
-  { name: "GDC Europe", category: "Gaming", born: 2009, died: 2016, cause: "Absorbed by main GDC", epitaph: "Cologne's developer conference. Quietly folded into gamescom's orbit." },
-
-  // Tech
-  { name: "Theranos", category: "Tech", born: 2003, died: 2018, cause: "Fraud", epitaph: "$9 billion valuation built on a machine that didn't work. Elizabeth Holmes became a cautionary tale." },
-  { name: "Quibi", category: "Tech", born: 2020, died: 2020, cause: "Nobody wanted it", epitaph: "$1.75 billion raised. Six months alive. A premium mobile-only streaming service during a pandemic when everyone was home." },
-  { name: "FTX", category: "Tech", born: 2019, died: 2022, cause: "Crypto fraud", epitaph: "Super Bowl ads, stadium naming rights, celebrity endorsements. Then the bank run. SBF is in prison." },
-  { name: "Pets.com", category: "Tech", born: 1998, died: 2000, cause: "Dot-com bust", epitaph: "The sock puppet mascot outlived the company. A monument to the first bubble." },
-  { name: "Webvan", category: "Tech", born: 1999, died: 2001, cause: "Too early, too fast", epitaph: "Online grocery delivery before anyone wanted it. Burned $800M building warehouses in 26 cities." },
-  { name: "Vine", category: "Tech", born: 2013, died: 2017, cause: "Twitter couldn't monetize it", epitaph: "Six-second videos changed internet comedy forever. Then Twitter killed it and TikTok ate the corpse." },
-  { name: "Google+", category: "Tech", born: 2011, died: 2019, cause: "Nobody showed up", epitaph: "Google forced it on every user. They still didn't use it. A data breach provided the mercy kill." },
-  { name: "MySpace", category: "Tech", born: 2003, died: 2011, cause: "Outcompeted by Facebook", epitaph: "Technically still online. Spiritually deceased. A generation's first social graph." },
-
-  // Retail
-  { name: "Blockbuster", category: "Retail", born: 1985, died: 2010, cause: "Disrupted by Netflix", epitaph: "Turned down buying Netflix for $50M in 2000. Filed for bankruptcy 10 years later. One store remains in Bend, Oregon." },
-  { name: "Toys R Us", category: "Retail", born: 1948, died: 2018, cause: "Private equity debt", epitaph: "A generation's paradise strangled by leveraged buyout debt while Amazon ate its lunch." },
-  { name: "Borders", category: "Retail", born: 1971, died: 2011, cause: "Bet wrong on digital", epitaph: "Outsourced online sales to Amazon. Dismissed ebooks. Watched Barnes & Noble pull ahead and never caught up." },
-  { name: "Circuit City", category: "Retail", born: 1949, died: 2009, cause: "Fired its best employees", epitaph: "Laid off its highest-paid sales staff to cut costs. Sales collapsed. Best Buy feasted." },
-
-  // Banking / Finance
-  { name: "Lehman Brothers", category: "Finance", born: 1850, died: 2008, cause: "Subprime collapse", epitaph: "158 years old. The bankruptcy that broke the global economy. Nobody was allowed to bail them out." },
-  { name: "Bear Stearns", category: "Finance", born: 1923, died: 2008, cause: "Liquidity crisis", epitaph: "Sold to JPMorgan for $2 a share. The first domino of the 2008 crisis." },
-  { name: "Washington Mutual", category: "Finance", born: 1889, died: 2008, cause: "Bank run", epitaph: "Largest bank failure in US history. Seized by the FDIC in September 2008." },
-  { name: "Silicon Valley Bank", category: "Finance", born: 1983, died: 2023, cause: "Twitter bank run", epitaph: "40 years of serving startups, undone in 48 hours when VCs tweeted each other into a panic." },
-  { name: "Credit Suisse", category: "Finance", born: 1856, died: 2023, cause: "Scandal fatigue", epitaph: "167 years of Swiss banking. Swallowed by UBS in an emergency government-brokered sale." },
-  { name: "Signature Bank", category: "Finance", born: 2001, died: 2023, cause: "Crypto contagion", epitaph: "Went down in the same week as SVB. Too much crypto exposure for regulators to stomach." },
-
-  // Sports
-  { name: "AAF", category: "Sports", born: 2019, died: 2019, cause: "Ran out of money", epitaph: "The Alliance of American Football. Eight weeks of games. Collapsed before the first season ended." },
-  { name: "USFL (original)", category: "Sports", born: 1983, died: 1985, cause: "Donald Trump's lawsuit", epitaph: "Won an antitrust case against the NFL. The damages: three dollars. League folded." },
-  { name: "XFL 1.0", category: "Sports", born: 2001, died: 2001, cause: "Terrible football", epitaph: "Vince McMahon's first try. One season of bad football and bad theater. $70 million lost." },
-  { name: "XFL 2.0", category: "Sports", born: 2020, died: 2020, cause: "COVID + bankruptcy", epitaph: "McMahon's second try. Five weeks in, the pandemic hit. Never recovered." },
-  { name: "NFL Europe", category: "Sports", born: 1991, died: 2007, cause: "$30M annual losses", epitaph: "Once called the WLAF. Sixteen years of trying to sell American football to Europeans. They preferred football football." },
-];
-
+let graves = [];
 let activeFilter = 'All';
-const categories = ['All', ...new Set(graves.map(g => g.category))];
+let categories = ['All'];
 
 function render() {
   // Filters
@@ -594,7 +567,14 @@ document.getElementById('modal').onclick = (e) => {
   if (e.target.id === 'modal') document.getElementById('modal').classList.remove('open');
 };
 
-render();
+async function init() {
+  document.getElementById('cemetery').innerHTML =
+    '<p class="exhuming">Exhuming records&hellip;</p>';
+  graves = await fetch('graves.json').then(r => r.json());
+  categories = ['All', ...new Set(graves.map(g => g.category))];
+  render();
+}
+init();
 </script>
 </body>
 </html>
